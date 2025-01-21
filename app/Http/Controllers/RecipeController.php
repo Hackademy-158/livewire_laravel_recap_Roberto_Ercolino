@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -12,7 +13,7 @@ class RecipeController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware('auth', except:['index', 'show'])
+            new Middleware('auth', except:['index', 'show', 'filterByCategory'])
         ];
     }
     /**
@@ -70,5 +71,10 @@ class RecipeController extends Controller implements HasMiddleware
     public function destroy(Recipe $recipe)
     {
         //
+    }
+
+    public function filterByCategory(Category $category)
+    {
+        return view('recipe.filterByCategory', compact('category'));
     }
 }
